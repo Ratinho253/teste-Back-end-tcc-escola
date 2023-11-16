@@ -3,6 +3,7 @@ var receitaDao = require('../model/DAO/receita.js')
 
 //Retorna todas as Receitas
 const ctlGetReceita = async () => {
+
     let dadosReceitaJSON = {}
 
     //Chama a função do arquivo DAO que irá retornar todos os resgistros do DB
@@ -10,7 +11,7 @@ const ctlGetReceita = async () => {
 
     if (dadosReceita) {
         dadosReceitaJSON = {
-            usuarios: dadosReceita
+            receita: dadosReceita
         }
         return dadosReceita
     } else {
@@ -29,7 +30,7 @@ const ctlGetReceitaId = async (id) => {
 
     if (dadosReceita) {
         dadosReceitaJSON = {
-            usuarios: dadosReceita
+            receita: dadosReceita
         }
         return dadosReceita
     } else {
@@ -46,7 +47,7 @@ const ctlGetReceitaFotoNome = async () => {
 
     if (dadosReceita) {
         dadosReceitaJSON = {
-            usuarios: dadosReceita
+            receita: dadosReceita
         }
         return dadosReceita
     } else {

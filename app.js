@@ -72,9 +72,8 @@ app.get('/v1/delicie/receita/:id', cors(), async function (request, response) {
 })
 
 //EndPoint: Retorna todas as receita 
-app.get('/v1/delicie/receita/', cors(), async function (request, response) {
+app.get('/v1/delicie/receita/', cors(), async function (response) {
 
-    let idReceita = request.params.receitas;
 
     //Recebe os dados da controller do status de usuario    
     let dadosStatusReceita = await controllerReceita.ctlGetReceita();
