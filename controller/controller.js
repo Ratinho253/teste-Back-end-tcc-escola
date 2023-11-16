@@ -11,9 +11,10 @@ const ctlGetReceita = async () => {
 
     if (dadosReceita) {
         dadosReceitaJSON = {
+            quantidade: dadosReceita.length,
             receita: dadosReceita
         }
-        return dadosReceita
+        return dadosReceitaJSON
     } else {
         return message.ERROR_REGISTER_NOT_FOUND
     }
@@ -32,7 +33,7 @@ const ctlGetReceitaId = async (id) => {
         dadosReceitaJSON = {
             receita: dadosReceita
         }
-        return dadosReceita
+        return dadosReceitaJSON
     } else {
         return message.ERROR_REGISTER_NOT_FOUND
     }
@@ -41,6 +42,7 @@ const ctlGetReceitaId = async (id) => {
 
 //Retorna todas as Receitas  só a foto eo nome 
 const ctlGetReceitaFotoNome = async () => {
+    
     let dadosReceitaJSON = {}
 
     let dadosReceita = await receitaDao.receitasFotoNome()
@@ -49,10 +51,12 @@ const ctlGetReceitaFotoNome = async () => {
         dadosReceitaJSON = {
             receita: dadosReceita
         }
-        return dadosReceita
+        return dadosReceitaJSON
+       
     } else {
         return message.ERROR_REGISTER_NOT_FOUND
     }
+
 }
 
 

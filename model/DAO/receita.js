@@ -58,9 +58,10 @@ from tbl_receita where tbl_receita.id = ${id};
 const receitasFotoNome = async () =>{
     
     let sql = `
-    select tbl_receita.foto_receita,
-	    tbl_receita.nome_da_receita
-    from tbl_receita;
+    select tbl_receita.id,
+	tbl_receita.foto_receita,
+	tbl_receita.nome_da_receita
+from tbl_receita;
     `
 
     let rsReceita = await prisma.$queryRawUnsafe(sql)

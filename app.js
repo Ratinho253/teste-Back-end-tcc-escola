@@ -37,7 +37,7 @@ app.use((request, response, next) => {
 
     //Atribui as permissões ao cors
     app.use(cors())
-
+//
     next()
 })
 
@@ -60,25 +60,37 @@ const bodyParserJson = bodyParser.json();
 var controllerReceita = require('./controller/controller.js')
 
 //EndPoint: Retorna a receita  filtrando pelo ID
-app.get('/v1/delicie/receita/:id', cors(), async function (request, response) {
+app.get('/v1/delicie/receita/:id', async function (request, response) {
+    
 
     let idReceita = request.params.id;
 
     //Recebe os dados da controller do status de usuario    
     let dadosStatusReceita = await controllerReceita.ctlGetReceitaId(idReceita);
 
-    response.status(dadosStatusReceita.status);
+    
+    response.json(dadosStatusReceita);
+})
+
+//EndPoint: Retorna a receita  foto e nome
+app.get('/v1/delicie/receita/foto', cors() ,bodyParserJson, async function (request, response) {
+    
+
+
+    //Recebe os dados da controller do status de usuario    
+    let dadosStatusReceita = await controllerReceita.ctlGetReceitaFotoNome();
+
+    
     response.json(dadosStatusReceita);
 })
 
 //EndPoint: Retorna todas as receita 
-app.get('/v1/delicie/receita/', cors(), async function (response) {
+app.get('/v1/delicie/receita', cors(), async function (request,response) {
 
 
     //Recebe os dados da controller do status de usuario    
     let dadosStatusReceita = await controllerReceita.ctlGetReceita();
 
-    response.status(dadosStatusReceita.status);
     response.json(dadosStatusReceita);
 })
 
