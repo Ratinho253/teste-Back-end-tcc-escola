@@ -19,7 +19,7 @@ var prisma = new PrismaClient()
 const todasReceitas = async () =>{
 
     let sql = `
-        select * from tbl_receita;
+        select * from tbl_ingrediente;
     `
 
     let rsReceita = await prisma.$queryRawUnsafe(sql)
@@ -34,15 +34,13 @@ const todasReceitas = async () =>{
 
 const todasReceitasId = async (id) =>{
     let sql = `
-    select tbl_receita.id,
-    tbl_receita.foto_receita, 
-    tbl_receita.nome_da_receita,
-    tbl_receita.modo_preparo, 
-    tbl_receita.modo_preparo_decricao,
-    tbl_receita.ingredientes,
-    tbl_receita.lista_ingredientes,
-    tbl_receita.tempo_de_preparo
-from tbl_receita where tbl_receita.id = ${id};
+    select tbl_ingrediente.id,
+    tbl_ingrediente.foto_receita, 
+    tbl_ingrediente.nome_da_receita,
+    tbl_ingrediente.modo_preparo,
+    tbl_ingrediente.lista_ingredientes,
+    tbl_ingrediente.tempo_de_preparo
+from tbl_ingrediente where tbl_ingrediente.id = ${id};
     `
 
     let rsReceita = await prisma.$queryRawUnsafe(sql)
@@ -55,13 +53,15 @@ from tbl_receita where tbl_receita.id = ${id};
 
 }
 
-const receitasFotoNome = async () =>{
+
+
+const receitasFotoNome = async (id) =>{
     
     let sql = `
-    select tbl_receita.id,
-	tbl_receita.foto_receita,
-	tbl_receita.nome_da_receita
-from tbl_receita;
+    select tbl_ingrediente.id,
+	tbl_ingrediente.foto_receita,
+	tbl_ingrediente.nome_da_receita
+from tbl_ingrediente where tbl_ingrediente.id = ${id};
     `
 
     let rsReceita = await prisma.$queryRawUnsafe(sql)

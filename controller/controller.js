@@ -41,11 +41,15 @@ const ctlGetReceitaId = async (id) => {
 }
 
 //Retorna todas as Receitas  só a foto eo nome 
-const ctlGetReceitaFotoNome = async () => {
+const ctlGetReceitaFotoNome = async (id) => {
     
     let dadosReceitaJSON = {}
 
-    let dadosReceita = await receitaDao.receitasFotoNome()
+    if (id == '' || id == null || id == undefined || isNaN(id)) {
+        return message.ERROR_INVALID_PARAMS
+    } else {
+    let dadosReceita = await receitaDao.receitasFotoNome(id)
+    
 
     if (dadosReceita) {
         dadosReceitaJSON = {
@@ -56,7 +60,7 @@ const ctlGetReceitaFotoNome = async () => {
     } else {
         return message.ERROR_REGISTER_NOT_FOUND
     }
-
+    }
 }
 
 

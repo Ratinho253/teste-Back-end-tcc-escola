@@ -73,12 +73,14 @@ app.get('/v1/delicie/receita/:id', async function (request, response) {
 })
 
 //EndPoint: Retorna a receita  foto e nome
-app.get('/v1/delicie/receita/foto', cors() ,bodyParserJson, async function (request, response) {
+app.get('/v1/delicie/receita/foto/:id', cors() ,bodyParserJson, async function (request, response) {
     
 
 
+    let idReceita = request.params.id;
+
     //Recebe os dados da controller do status de usuario    
-    let dadosStatusReceita = await controllerReceita.ctlGetReceitaFotoNome();
+    let dadosStatusReceita = await controllerReceita.ctlGetReceitaFotoNome(idReceita);
 
     
     response.json(dadosStatusReceita);
