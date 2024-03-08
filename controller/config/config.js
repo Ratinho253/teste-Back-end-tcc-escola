@@ -19,6 +19,11 @@ const ERROR_REGISTER_NOT_FOUND= {status: 404, message: 'O SERVIDOR NÃO ENCONTRO
 
 const ERROR_INTERNAL_SERVER = {status: 500, message: 'DEVIDO A UM ERRO INTERNO NO SERVIDOR, NÃO FOI POSSIVEL PROCESSAR A REQUISIÇÃO'}
 
+const ERROR_REQUIRED_FIELDS = {status : 400, message : 'Campos obrigatórios não foram preenchidos'}
+
+const ERROR_ID_NO_EXISTENT = {status : 400, message : 'O id informado na requisição não é valido ou não existe mais'}
+
+const ERROR_NOT_FOUND = {status : 404, message : 'Nenhum item encontrado na requisição'}
 
 /*************************************** MENSAGENS DE SUCESSO ***************************************/
 const SUCCESS_CREATED_ITEM = {status: 201, message: 'ITEM CRIADO COM SUCESSO'}
@@ -38,6 +43,9 @@ module.exports = {
     ERROR_INVALID_CONTENT_TYPE,
     ERROR_REQUIRE_FIELDS,
     ERROR_INVALID_EMAIL,
+    ERROR_REQUIRED_FIELDS,
+    ERROR_ID_NO_EXISTENT,
+    ERROR_NOT_FOUND,
 
     //Exportes de sucesso
     SUCCESS_CREATED_ITEM,

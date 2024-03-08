@@ -64,8 +64,75 @@ const ctlGetReceitaFotoNome = async (id) => {
 }
 
 
+const deletarReceita = async function (id) {
+
+    let idReceita = id
+  
+  
+    let statusId = await receitaDao.todasReceitasId(idReceita)
+      
+    let dadosReceita = await receitaDao.deleteReceita(idReceita)
+  
+    if (statusId) {
+  
+      if (dadosReceita) {
+        let statusId = {}
+        console.log(dadosReceita);
+        statusId.status = message.SUCCESS_DELETED_ITEM.status
+        console.log(dadosReceita);
+
+        return statusId
+      }
+    } else{
+      return message.ERROR_NOT_FOUND
+    }
+       
+}
+
+// Inserir  Receita
+
+const inserirReceita = async function (dadosReceita) {
+
+    //Validação  para tratar campos obrigatorios
+    if (dadosReceita.nome_da_receita == '' || dadosReceita.nome_da_receita == undefined || dadosReceita.nome_da_receita.length > 100 ||
+    dadosReceita.foto_receita == '' || dadosReceita.foto_receita == undefined || dadosReceita.foto_receita.length > 5000 ||
+    dadosReceita.modo_preparo == '' || dadosReceita.modo_preparo == undefined || dadosReceita.modo_preparo.length > 150 ||
+    dadosReceita.lista_ingredientes == '' || dadosReceita.lista_ingredientes == undefined || dadosReceita.lista_ingredientes.length > 100 ||
+    dadosReceita.tempo_de_preparo == '' || dadosReceita.tempo_de_preparo == undefined || dadosReceita.tempo_de_preparo.length > 10
+    ) {
+      return message.ERROR_REQUIRED_FIELDS // status code 400
+    } else {
+  
+      // Envia os dados para a model inserir no banco de dados
+      let resultDadosReceita = await receitaDao.insertReceita(dadosReceita)
+  
+      // Valida se o DB inseriu corretanmente os dados
+      if (resultDadosReceita) {
+  
+        // chama a função que vai encontrar o id gerado apos o insert
+        let novaReceita = await receitaDao.selectLastId()
+  
+  
+        let dadosReceitaJSON = {}
+  
+        dadosReceitaJSON.status = message.SUCCESS_CREATED_ITEM.status
+        dadosReceitaJSON.receita = novaReceita
+  
+        return dadosReceitaJSON// status code 201
+      } else {
+        return message.ERROR_INTERNAL_SERVER // status code 500
+      }
+  
+    }
+  
+  }
+
+
+
 module.exports = {
     ctlGetReceita,
     ctlGetReceitaId,
-    ctlGetReceitaFotoNome
+    ctlGetReceitaFotoNome,
+    deletarReceita,
+    inserirReceita,
 }

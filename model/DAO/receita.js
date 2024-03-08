@@ -74,8 +74,71 @@ from tbl_ingrediente where tbl_ingrediente.id = ${id};
 
 }
 
+const deleteReceita = async function (id) {
+
+    let idReceita = id
+
+    let sql = `delete  from tbl_ingrediente where id = ${idReceita}`
+    
+
+    let rsReceita = await prisma.$queryRawUnsafe(sql)
+
+    if (rsReceita) {
+        return rsReceita
+    } else {
+        return false
+    }
+}
+
+// Insere novo aluno
+const insertReceita = async function (dadosReceita) {
+    
+    // scriptSql para inserir dados 
+    let sql = `insert into tbl_ingrediente (
+        foto_receita,
+        nome_da_receita,
+        modo_preparo,
+        lista_ingredientes,
+        tempo_de_preparo
+                        ) values(
+                            '${dadosReceita.foto_receita}',
+                            '${dadosReceita.nome_da_receita}',
+                            '${dadosReceita.modo_preparo}',
+                            '${dadosReceita.lista_ingredientes}',
+                            '${dadosReceita.tempo_de_preparo}'
+                        )`
+    //Executa o scriptSql no banco de dados                    
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
+
+}
+
+const  selectLastId = async function(){
+
+    let sql =  'select * from tbl_ingrediente order by id desc limit 1'
+    
+    let rsReceita =  await prisma.$queryRawUnsafe(sql)
+
+    if ( rsReceita.length > 0){
+        return rsReceita
+    }else {
+        return false 
+    }
+}
+
+
+
+
 module.exports = {
     todasReceitas,
     todasReceitasId,
-    receitasFotoNome
+    receitasFotoNome,
+    deleteReceita,
+    insertReceita,
+    selectLastId,
 }

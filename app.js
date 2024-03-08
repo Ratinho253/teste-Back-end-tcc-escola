@@ -59,6 +59,8 @@ const bodyParserJson = bodyParser.json();
 //Import do arquivo da controller que irá solicitar a model os dados do BD
 var controllerReceita = require('./controller/controller.js')
 
+
+var message = require('./controller/config/config.js')
 //EndPoint: Retorna a receita  filtrando pelo ID
 app.get('/v1/delicie/receita/:id', async function (request, response) {
     
@@ -95,5 +97,47 @@ app.get('/v1/delicie/receita', cors(), async function (request,response) {
 
     response.json(dadosStatusReceita);
 })
+
+//EndPoint: Deletar as receita por id 
+app.delete('/v1/delicie/receita/deletar/:id', cors(), async function (request, response) {
+   
+    let idReceita = request.params.id
+  
+    let dadosReceita = await controllerReceita.deletarReceita(idReceita)
+  
+    if (dadosReceita) {
+      response.status(message.SUCCESS_DELETED_ITEM.status)
+      console.log( );
+      response.json()
+    } else {
+      response.status(message.ERROR_ID_NO_EXISTENT.status)
+      response.json()
+    }
+  
+  })
+
+
+  // EndPoint: Inserir receita
+  app.post('/v1/delicie/inserir/receita', cors(), bodyParserJson, async function (request, response) {
+
+    let contentType = request.headers['content-type']
+  
+    if (String(contentType).toLowerCase() == 'application/json') {
+  
+      // recebe os dados encaminhados na requisição
+      let dadosBody = request.body
+  
+      let resultDadosReceita = await controllerReceita.inserirReceita(dadosBody)
+  
+      response.status(resultDadosReceita.status)
+      response.json(resultDadosReceita)
+  
+    }else {
+      response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+      response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+  })
+
+  
 
 app.listen(8080, () => console.log('Servidor aguardando requisições na porta 8080.'))
