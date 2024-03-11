@@ -131,7 +131,27 @@ const  selectLastId = async function(){
     }
 }
 
+// Atualizar  um aluno existente
+const uptadeReceita = async function (dadosReceita) {
 
+    let sql = `update tbl_ingrediente set
+    
+        foto_receita = '${dadosReceita.foto_receita}', 
+        nome_da_receita = '${dadosReceita.nome_da_receita}', 
+        modo_preparo = '${dadosReceita.modo_preparo}', 
+        lista_ingredientes = '${dadosReceita.lista_ingredientes}', 
+        tempo_de_preparo = '${dadosReceita.tempo_de_preparo}'
+        where id = ${dadosReceita.id}`
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
+
+}
 
 
 module.exports = {
@@ -141,4 +161,5 @@ module.exports = {
     deleteReceita,
     insertReceita,
     selectLastId,
+    uptadeReceita,
 }

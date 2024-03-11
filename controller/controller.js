@@ -127,6 +127,46 @@ const inserirReceita = async function (dadosReceita) {
   
   }
 
+  const AtualizarReceita = async function (dadosReceita, idReceita) {
+
+
+    //Validação  para tratar campos obrigatorios
+     if (dadosReceita.nome_da_receita == '' || dadosReceita.nome_da_receita == undefined || dadosReceita.nome_da_receita.length > 100 ||
+    dadosReceita.foto_receita == '' || dadosReceita.foto_receita == undefined || dadosReceita.foto_receita.length > 5000 ||
+    dadosReceita.modo_preparo == '' || dadosReceita.modo_preparo == undefined || dadosReceita.modo_preparo.length > 150 ||
+    dadosReceita.lista_ingredientes == '' || dadosReceita.lista_ingredientes == undefined || dadosReceita.lista_ingredientes.length > 100 ||
+    dadosReceita.tempo_de_preparo == '' || dadosReceita.tempo_de_preparo == undefined || dadosReceita.tempo_de_preparo.length > 10
+    ) {
+      return message.ERROR_REQUIRED_FIELDS // status code 400
+  
+      // validação de id incorreto ou não informado
+    } else if (idReceita == '' || idReceita == undefined || isNaN(idReceita)) {
+      return message.ERROR_INVALID_ID // status code 400 
+    } else {
+  
+      // adiciona um id do aluno no json do dados
+  
+      dadosReceita.id = idReceita
+  
+  
+  
+      // encaminha os dados para a model do aluno 
+      let resultDadosAluno = await receitaDao.uptadeReceita(dadosReceita)
+  
+      if (resultDadosAluno) {
+        let dadosReceitaJson = {}
+        dadosReceitaJson.status = message.SUCCESS_UPDATED_ITEM.status
+        dadosReceitaJson.aluno = dadosReceita
+        return dadosReceitaJson // status code 200
+      } else {
+        return message.ERROR_INTERNAL_SERVER
+      }
+  
+    }
+  
+  
+  }
+
 
 
 module.exports = {
@@ -135,4 +175,5 @@ module.exports = {
     ctlGetReceitaFotoNome,
     deletarReceita,
     inserirReceita,
+    AtualizarReceita,
 }

@@ -139,5 +139,30 @@ app.delete('/v1/delicie/receita/deletar/:id', cors(), async function (request, r
   })
 
   
+  // EndPoint: atualizar receita
+
+  app.put('/v1/delicie/inserir/receita/atualiza/:id', cors(), bodyParserJson, async function (request, response) {
+
+    let contentType = request.headers['content-type']
+  
+    if (String(contentType).toLowerCase() == 'application/json') {
+      // Recebe o id do aluno pelo parametro
+      let idReceita = request.params.id
+  
+      // Recebe os dados dos alunos encaminhado no corpo da requisição
+      let dadosBody = request.body
+  
+      // Encaminha os dados para o controller
+      let resultDadosReceita = await controllerReceita.AtualizarReceita(dadosBody, idReceita)
+  
+      response.status(resultDadosReceita.status)
+      response.json(resultDadosReceita)
+  
+    } else {
+      response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+      response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+  })
+  
 
 app.listen(8080, () => console.log('Servidor aguardando requisições na porta 8080.'))
