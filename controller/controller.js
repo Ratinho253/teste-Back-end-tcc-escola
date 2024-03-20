@@ -78,10 +78,7 @@ const deletarReceita = async function (id) {
       if (dadosReceita) {
         let statusId = {}
         console.log(dadosReceita);
-        statusId.status = message.SUCCESS_DELETED_ITEM.status
-        console.log(dadosReceita);
-
-        return statusId
+        return statusId.status = message.SUCCESS_DELETED_ITEM
       }
     } else{
       return message.ERROR_NOT_FOUND

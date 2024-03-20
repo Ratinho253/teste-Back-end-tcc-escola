@@ -104,15 +104,9 @@ app.delete('/v1/delicie/receita/deletar/:id', cors(), async function (request, r
     let idReceita = request.params.id
   
     let dadosReceita = await controllerReceita.deletarReceita(idReceita)
-  
-    if (dadosReceita) {
-      response.status(message.SUCCESS_DELETED_ITEM.status)
-      console.log( );
-      response.json()
-    } else {
-      response.status(message.ERROR_ID_NO_EXISTENT.status)
-      response.json()
-    }
+
+    response.status(dadosReceita.status)
+    response.json(dadosReceita)
   
   })
 
@@ -140,7 +134,6 @@ app.delete('/v1/delicie/receita/deletar/:id', cors(), async function (request, r
 
   
   // EndPoint: atualizar receita
-
   app.put('/v1/delicie/inserir/receita/atualiza/:id', cors(), bodyParserJson, async function (request, response) {
 
     let contentType = request.headers['content-type']
